@@ -1,6 +1,11 @@
 /* eslint-disable no-console */
 const pm2 = require('pm2');
 
+/**
+ * PM2 is a daemon process manager that 
+ * will help you manage and keep your application online.
+ */
+
 const instances = process.env.WEB_CONCURRENCY || -1;
 const maxMemory = process.env.WEB_MEMORY || 512;
 

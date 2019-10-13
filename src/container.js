@@ -1,8 +1,8 @@
 const { createContainer, asClass, asFunction, asValue } = require('awilix');
 const { scopePerRequest } = require('awilix-express');
-
 const config = require('../config');
 const Application = require('./app/Application');
+
 const {
   CreateUser,
   GetAllUsers,
@@ -11,8 +11,12 @@ const {
   DeleteUser
 } = require('./app/user');
 
-const UserSerializer = require('./interfaces/http/user/UserSerializer');
+const {
+  GetAllPokemons
+} = require('./app/pokemon');
 
+const UserSerializer = require('./interfaces/http/user/UserSerializer');
+const PokemonSerializer = require('./interfaces/http/pokemon/PokemonSerializer');
 const Server = require('./interfaces/http/Server');
 const router = require('./interfaces/http/router');
 const loggerMiddleware = require('./interfaces/http/logging/loggerMiddleware');
@@ -22,6 +26,9 @@ const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware')
 
 const logger = require('./infra/logging/logger');
 const SequelizeUsersRepository = require('./infra/user/SequelizeUsersRepository');
+const PokemonsRepository = require('./infra/pokemon/PokemonsRepository');
+const pokedex = require("./infra/support/pokedex");
+
 const { database, User: UserModel } = require('./infra/database/models');
 
 const container = createContainer();
@@ -38,6 +45,9 @@ container
   })
   .register({
     config: asValue(config)
+  })
+  .register({
+    pokedex: asValue(pokedex)
   });
 
 // Middlewares
@@ -56,6 +66,11 @@ container.register({
   usersRepository: asClass(SequelizeUsersRepository).singleton()
 });
 
+// Pokemons repository
+container.register({
+  pokemonsRepository: asClass(PokemonsRepository).singleton()
+});
+
 // Database
 container.register({
   database: asValue(database),
@@ -71,9 +86,20 @@ container.register({
   deleteUser: asClass(DeleteUser)
 });
 
+// Pokemons operations or use cases
+container.register({
+  getAllPokemons: asClass(GetAllPokemons)
+});
+
+
 // Serializers
 container.register({
   userSerializer: asValue(UserSerializer)
+});
+
+// Pokemons serializers
+container.register({
+  pokemonSerializer: asValue(PokemonSerializer)
 });
 
 module.exports = container;
