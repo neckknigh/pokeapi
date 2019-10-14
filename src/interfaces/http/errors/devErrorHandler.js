@@ -7,8 +7,9 @@ module.exports = (err, req, res, next) => { // eslint-disable-line no-unused-var
   logger.error(err);
 
   res.status(Status.INTERNAL_SERVER_ERROR).json({
-    type: 'InternalServerError',
-    message: err.message,
-    stack: err.stack
+    error: {
+      type: 'InternalServerError',
+      message: err.message,
+    }
   });
 };

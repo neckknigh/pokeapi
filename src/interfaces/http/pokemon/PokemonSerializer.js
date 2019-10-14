@@ -4,7 +4,14 @@ const PokemonSerializer = {
       name,
       id
     };
+  },
+
+  serializePokemonList(pokemonList) {
+    return {
+      pokemons: pokemonList.map(this.serialize)
+    }
   }
+
 };
 
 module.exports = PokemonSerializer;

@@ -7,9 +7,18 @@ class PokemonAdapter {
     }
 
     adaptToEntity(rawPokemon) {
-        const { name, url } = rawPokemon;
+        let { name, url } = rawPokemon;
+        let id = null;
 
-        return new Pokemon({ name, id: this.buildPokemonID(url) });
+        if (!name) {
+            name = rawPokemon;
+        }
+
+        if (!!url) {
+            id = this.buildPokemonID(url);
+        }
+
+        return new Pokemon({ name, id });
     }
 
     buildPokemonID(pokemonUrl) {
@@ -24,7 +33,4 @@ class PokemonAdapter {
     }
 }
 
-const pokemonAdapter = new PokemonAdapter();
-console.log("adapter", pokemonAdapter.buildPokemonID("1"));
-
-module.exports = pokemonAdapter;
+module.exports = PokemonAdapter;

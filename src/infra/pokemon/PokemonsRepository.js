@@ -1,15 +1,14 @@
-const pokemonAdapter = require("./PokemonAdapter");
-
 class PokemonsRepository {
 
-    constructor({ pokedex }) {
+    constructor({ pokedex, pokemonAdapter }) {
         this.pokedex = pokedex;
+        this.pokemonAdapter = pokemonAdapter;
     }
 
     async getAll() {
         const rawPokemonsData = await this.pokedex.getPokemonsList();
 
-        return pokemonAdapter.adaptToEntities(rawPokemonsData);
+        return this.pokemonAdapter.adaptToEntities(rawPokemonsData);
     }
 }
 

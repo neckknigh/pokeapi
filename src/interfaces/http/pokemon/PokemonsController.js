@@ -21,7 +21,7 @@ const PokemonsController = {
             .on(SUCCESS, (pokemons) => {
                 res
                     .status(Status.OK)
-                    .json(pokemons.map(pokemonSerializer.serialize));
+                    .json(pokemonSerializer.serializePokemonList(pokemons));
             })
             .on(ERROR, next);
 

@@ -48,7 +48,15 @@ module.exports = ({
 
   apiRouter.use('/users', controller('user/UsersController'));
 
+  // endpoint for pokemons
   apiRouter.use('/pokemons', controller('pokemon/PokemonsController'));
+
+  // endpoint for newspaper
+  apiRouter.use('/newspaper', controller('newspaper/NewspaperController'));
+
+  // endpoint for pokemon fights
+  apiRouter.use('/pokemonfights', controller('pokemonfightresult/PokemonFightResultController'));
+
 
   router.use('/api', apiRouter);
 
