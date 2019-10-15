@@ -50,6 +50,8 @@ Endpoints:
 
 - Permite obtener el minimo número de peleas necesarias para llegar al resultado pasado como query parameter al api, o en caso que no, se utiliza el publicado en /api/newspaper/pokemonfights/lastresult.
 
+- En caso que el resultado no cumpla con las reglas, se mostrará un mensaje de error.
+
 
 
 
