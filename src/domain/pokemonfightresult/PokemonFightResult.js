@@ -2,7 +2,6 @@ const { attributes } = require('structure');
 const Pokemon = require('../pokemon/Pokemon');
 
 const PokemonFightResult = attributes({
-    id: Number,
     pokemonList: {
         type: Array,
         itemType: Pokemon,

@@ -1,4 +1,4 @@
-class NewspaperSerializer {
+const NewspaperSerializer = {
     serializeLastPokemonFightResult(pokemonFightResult) {
         return {
             "Pokefight_result": pokemonFightResult.pokemonList.map((pokemon) => {
@@ -8,7 +8,7 @@ class NewspaperSerializer {
                     id
                 }
             })
-        }
+        };
     }
 };
 

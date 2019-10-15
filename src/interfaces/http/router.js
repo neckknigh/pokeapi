@@ -46,8 +46,6 @@ module.exports = ({
    * The `controllerPath` is relative to the `interfaces/http` folder
    */
 
-  apiRouter.use('/users', controller('user/UsersController'));
-
   // endpoint for pokemons
   apiRouter.use('/pokemons', controller('pokemon/PokemonsController'));
 
@@ -55,7 +53,7 @@ module.exports = ({
   apiRouter.use('/newspaper', controller('newspaper/NewspaperController'));
 
   // endpoint for pokemon fights
-  apiRouter.use('/pokemonfights', controller('pokemonfightresult/PokemonFightResultController'));
+  apiRouter.use('/pokemonfights', controller('pokemonfight/PokemonFightController'));
 
 
   router.use('/api', apiRouter);

@@ -10,19 +10,9 @@ const loggerMiddleware = require('./interfaces/http/logging/loggerMiddleware');
 const errorHandler = require('./interfaces/http/errors/errorHandler');
 const devErrorHandler = require('./interfaces/http/errors/devErrorHandler');
 const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware');
-const UserSerializer = require('./interfaces/http/user/UserSerializer');
 const PokemonSerializer = require('./interfaces/http/pokemon/PokemonSerializer');
 const NewspaperSerializer = require('./interfaces/http/newspaper/NewspaperSerializer');
-const PokemonFightResultSerializer = require('./interfaces/http/pokemonfightresult/PokemonFightResultSerializer');
-
-
-const {
-  CreateUser,
-  GetAllUsers,
-  GetUser,
-  UpdateUser,
-  DeleteUser
-} = require('./app/user');
+const PokemonFightSerializer = require('./interfaces/http/pokemonfight/PokemonFightSerializer');
 
 const {
   GetAllPokemons
@@ -34,7 +24,7 @@ const {
 
 const {
   GetMinimumFights
-} = require('./app/pokemonfightresult');
+} = require('./app/pokemonfight');
 
 const {
   PokemonFightsAppService
@@ -47,7 +37,6 @@ const {
 
 
 const logger = require('./infra/logging/logger');
-const SequelizeUsersRepository = require('./infra/user/SequelizeUsersRepository');
 
 const {
   PokemonAdapter,
@@ -61,6 +50,7 @@ const {
 
 const PokemonFightResultService = require('./infra/services/PokemonFightResultService');
 const pokedex = require("./infra/support/pokedex");
+const fastSort = require('./infra/support/fastSort');
 const { database, User: UserModel } = require('./infra/database/models');
 
 const container = createContainer();
@@ -80,6 +70,9 @@ container
   })
   .register({
     pokedex: asValue(pokedex)
+  })
+  .register({
+    fastSort: asValue(fastSort)
   });
 
 // Middlewares
@@ -92,11 +85,6 @@ container
     errorHandler: asValue(config.production ? errorHandler : devErrorHandler),
     swaggerMiddleware: asValue([swaggerMiddleware])
   });
-
-// Repositories
-container.register({
-  usersRepository: asClass(SequelizeUsersRepository).singleton()
-});
 
 // Pokemons repository
 container.register({
@@ -115,14 +103,6 @@ container.register({
   UserModel: asValue(UserModel)
 });
 
-// Operations
-container.register({
-  createUser: asClass(CreateUser),
-  getAllUsers: asClass(GetAllUsers),
-  getUser: asClass(GetUser),
-  updateUser: asClass(UpdateUser),
-  deleteUser: asClass(DeleteUser)
-});
 
 // Pokemons operations or use cases
 container.register({
@@ -131,10 +111,6 @@ container.register({
   pokemonService: asClass(PokemonService).singleton()
 });
 
-// Serializers
-container.register({
-  userSerializer: asValue(UserSerializer)
-});
 
 // Pokemon serializers
 container.register({
@@ -150,7 +126,7 @@ container.register({
 
 // Newspaper serializers
 container.register({
-  newspaperSerializer: asClass(NewspaperSerializer)
+  newspaperSerializer: asValue(NewspaperSerializer)
 });
 
 
@@ -162,7 +138,7 @@ container.register({
 
 // pokemon fight result serializer
 container.register({
-  pokemonFighResultSerializer: asClass(PokemonFightResultSerializer)
+  pokemonFightSerializer: asValue(PokemonFightSerializer)
 });
 
 // pokemon fight result operation or use case

@@ -1,4 +1,4 @@
 module.exports = {
-    PokemonFightService: require('./PokemonFight/PokemonFightService'),
-    PokemonService: require('./Pokemon/PokemonService')
+    PokemonFightService: require('./pokemonFight/PokemonFightService'),
+    PokemonService: require('./pokemon/PokemonService')
 }

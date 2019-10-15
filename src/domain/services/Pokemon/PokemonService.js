@@ -2,6 +2,10 @@ const fastSort = require('fast-sort');
 
 class PokemonService {
 
+    constructor({ fastSort }){
+        this.fastSort = fastSort;
+    }
+
     /**
      * Pure Function.
     * Cyclomatic Complexity: O(n) where n is the number of pokemons.
@@ -24,7 +28,7 @@ class PokemonService {
      * @param {Array<Pokemon>} pokemonList pokemon list to be sorted
      */
     sortPokemonsById(pokemonList) {
-        return fastSort(this.clonePokemons(pokemonList)).asc(pokemon => pokemon.id);
+        return this.fastSort(this.clonePokemons(pokemonList)).asc(pokemon => pokemon.id);
     }
 
     clonePokemons(pokemons) {

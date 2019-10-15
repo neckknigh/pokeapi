@@ -24,6 +24,4 @@ const Pokemon = attributes({
     }
 });
 
-Pokemon.MAX_ALLOWED_FIGHTS = 2;
-
 module.exports = Pokemon;

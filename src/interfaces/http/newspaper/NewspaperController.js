@@ -8,9 +8,9 @@ const NewspaperController = {
 
         router.use(inject('newspaperSerializer'));
 
-        // endpoint /newspaper/lastpokemonfightresult
+        // endpoint /newspaper/pokemonfights/lastresult
         router.get(
-            '/lastpokemonfightresult',
+            '/pokemonfights/lastresult',
             inject('getLastPokemonFightResult'),
             this.showLastPokemonFightResult
         );

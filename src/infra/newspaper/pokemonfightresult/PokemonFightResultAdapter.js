@@ -9,8 +9,8 @@ class PokemonFightResultAdapter {
 
     adaptToEntity(rawPokemonFightResult) {
 
-        const { pokemonList, id } = rawPokemonFightResult;
-        const pokemonFightResult = new PokemonFightResult({ id });
+        const { pokemonList } = rawPokemonFightResult;
+        const pokemonFightResult = new PokemonFightResult();
 
         pokemonFightResult.setPokemonList(
             pokemonList.map(

@@ -18,17 +18,17 @@ describe('App :: Operation', () => {
         const operation = new CustomOperation();
 
         expect(() => {
-          operation.on(operation.outputs.SUCCESS, () => {});
+          operation.on(operation.outputs.SUCCESS, () => { });
         }).to.not.throw;
       });
     });
 
     context('when added handler for a invalid output', () => {
-      it('does not throw', () => {
+      it('does throw', () => {
         const operation = new CustomOperation();
 
         expect(() => {
-          operation.on('INVALID', () => {});
+          operation.on('INVALID', () => { });
         }).to.throw(Error, /Invalid output "INVALID" to operation CustomOperation/);
       });
     });
