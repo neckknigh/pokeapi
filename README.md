@@ -1,114 +1,56 @@
-# Node API boilerplate
+Hints
+- Esta aplicación está escrita en NodeJS.
+- Organización de código inspirada en DDD y Clean Architecture centrada en la escalabilidad de la base de código.
+- Usa Nodemon para recargar automáticamente el servidor después de un cambio de archivo cuando esté en modo de desarrollo, lo que hace que el desarrollo sea más rápido y fácil.
+- Usa Express para el enrutamiento de solicitudes y middlewares. Hay algunos middlewares esenciales para las API web que ya están configuradas, como body-parser, compresión, CORS y método-override.
+- El conjunto de pruebas utiliza Mocha / Chai y está preparado para ejecutar pruebas unitarias.
 
-An opinionated boilerplate for Node web APIs focused on separation of concerns and scalability.
+En lugar de las carpetas clásicas de controladores / modelos / servicios, ahora tenemos capas dentro de la carpeta src. Cada una de las capas de la carpeta está definida por un espacio de nombres con respecto a la preocupación de lo que trata (como pokemons, errors, etc.):
 
-## Features
+Estructura de carpetas:
 
-<dl>
-  <dt>Multilayer folder structure</dt>
-  <dd>
-    <a href="https://github.com/talyssonoc/node-api-boilerplate/wiki/Folder-structure">Code organization</a> inspired by <a href="http://dddcommunity.org/">DDD</a> and <a href="https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture</a> focused on codebase scalability.
-  </dd>
+Input interfaces layer (interfaces folder):
 
-  <dt>Instant feedback and reload</dt>
-  <dd>
-    Use <a href="https://www.npmjs.com/package/nodemon">Nodemon</a> to automatically reload the server after a file change when on development mode, makes the development faster and easier.
-  </dd>
+Esta carpeta contiene todos los puntos de entrada para la aplicación. Desde el principio, aquí es donde estarán los controladores (dentro de la carpeta interfaces / http).
 
-  <dt>Ready for production</dt>
-  <dd>
-    Setup with <a href="https://www.npmjs.com/package/pm2">PM2</a> process manager ready to go live on production. It's also out-of-box ready to be deployed at Heroku, you can read more about it <a href="https://github.com/talyssonoc/node-api-boilerplate/wiki/Setup-in-Heroku">here</a>.
-  </dd>
+Application layer (app folder):
 
-  <dt>Scalable and easy to use web server</dt>
-  <dd>
-    Use <a href="https://www.npmjs.com/package/express">Express</a> for requests routing and middlewares. There are some essential middlewares for web APIs already setup, like <a href="https://www.npmjs.com/package/body-parser">body-parser</a>, <a href="https://www.npmjs.com/package/compression">compression</a>, <a href="https://www.npmjs.com/package/cors">CORS</a> and <a href="https://www.npmjs.com/package/method-override">method-override</a>.
-  </dd>
+La capa de aplicación es responsable de mediar entre las interfaces de entrada y su dominio.
 
-  <dt>Database integration</dt>
-  <dd>
-    <a href="https://www.npmjs.com/package/sequelize">Sequelize</a>, an ORM for SQL databases, is already integrated, you just have to set the <a href="https://github.com/talyssonoc/node-api-boilerplate/wiki/Database-setup">authentication configurations</a>.
-  </dd>
+Domain layer (domain folder):
 
-  <dt>Prepared for testing</dt>
-  <dd>
-    The test suite uses <a href="https://www.npmjs.com/package/mocha">Mocha</a>/<a href="https://www.npmjs.com/package/chai">Chai</a> and is prepared to run unit, integration and functional tests right from the beginning. There are helpers to <a href="https://github.com/talyssonoc/node-api-boilerplate/wiki/The-test-suite">make it easy to make requests to the web app during the tests and for cleaning the database after each test</a>. A <a href="https://www.npmjs.com/package/factory-girl">FactoryGirl</a> adapter for Sequelize is setup to make your tests DRY as well, and the tests generate code coverage measurement with <a href="https://www.npmjs.com/package/istanbul">Istanbul</a>. You should read about the <a href="https://github.com/talyssonoc/node-api-boilerplate/wiki/Chai-plugins">Chai plugins that are setup by default too</a>.
-  </dd>
+Aquí definirá las clases del dominio, funciones y servicios que componen el modelo de dominio. Todas las reglas de negocio deben declararse en esta capa para que la capa de aplicación pueda usarla para componer sus casos de uso.
 
-  <dt>Dependency injection</dt>
-  <dd>
-    With <a href="https://www.npmjs.com/package/awilix">Awilix</a>, a practical dependency injection library, the code will not be coupled and it'll still be easy to resolve automatically the dependencies on the runtime and mock them during the tests. It's even possible inject dependencies on your controllers with the <a href="https://www.npmjs.com/package/awilix-express">Awilix Express adapter</a>. Click <a href="https://github.com/talyssonoc/node-api-boilerplate/wiki/Dependency-injection-container">here</a> if you want to read more about how to use dependency injection with this boilerplate.
-  </dd>
+Infrastructure layer (infra folder):
 
-  <dt>CLI integration</dt>
-  <dd>
-    Both the application and Sequelize have command-line tools to make it easy to work with them. Check the <a href="#scripts">Scripts</a> section to know more about this feature.
-  </dd>
+Esta es la más baja de las capas. En la capa infra, tendrá la comunicación con lo que está fuera de la aplicación, como la base de datos, servicios de correo y comunicación directa con frameworks.
 
-  <dt>Logging</dt>
-  <dd>
-    The <a href="https://www.npmjs.com/package/log4js">Log4js</a> logger is highly pluggable, being able to append the messages to a file during the development and send them to a logging service when on production. Even the requests (through <a href="https://www.npmjs.com/package/morgan">morgan</a>) and queries will be logged.
-  </dd>
+Comandos:
 
-  <dt>Linter</dt>
-  <dd>
-    It's also setup with <a href="https://www.npmjs.com/package/eslint">ESLint</a> to make it easy to ensure a code styling and find code smells.
-  </dd>
-</dl>
+- npm run dev: ejecutar la aplicación en modo desarrollo
+- npm start: ejecutar la aplicación en producción.
+- npm run test:unit : ejecutar el set de pruebas unitarias.
 
-## Quick start
+Endpoints:
 
-_Notice that the boilerplate comes with a small application for user management already, you can delete it with a npm script after you understand how the boilerplate works but please do the quick start first!_ 😊
+/api/pokemons: 
 
-1. Clone the repository with `git clone --depth=1 https://github.com/talyssonoc/node-api-boilerplate`
-2. Setup the database on `config/database.js` (there's an example file there to be used with PostgreSQL 😉 )
-3. Install the dependencies with `yarn` (click here if [you don't have Yarn installed](https://yarnpkg.com/docs/install))
-4. Create the development and test databases you have setup on `config/database.js`
-5. Run the database migrations with `npm run sequelize db:migrate`
-6. Add some seed data to the development database with `npm run sequelize db:seed:all`
-7. Run the application in development mode with `npm run dev`
-8. Access `http://localhost:3000/api/users` and you're ready to go!
+- Muestra el listado de pokemones publicado en la pokeapi.
+- Se utiliza un wrapper que garantiza la "fair use policy" utilizando caching con el objetivo de evitar el baneo de IP.
+- Se muestran todos los pokemones disponibles.
 
-After playing a little bit with the boilerplate and _before_ implementing a real application with it I recommend you to read at least the `Setup` and the `Organization and architecture` sections of our [Wiki](https://github.com/talyssonoc/node-api-boilerplate/wiki). After that you'll be able to remove the example application files running `npm run cleanup`
+/api/newspaper/pokemonfights/lastresult
 
-## Aditional info:
+- Muestra el ultimo resultado de batallas pokemon
+- Esta api deberia ser externa. Deberia ser del newspaper. Pero para efectos de la prueba se integra en la aplicación.
 
-- Don't forget to run the migrations for the test environment as well (including when you create a new migration) with `npm run sequelize db:migrate -- --env=test`
+/api/pokemonfights/minimumfights 
 
-## Scripts
+/api/pokemonfights/minimumfights?pokemonresultlist=squirtle,bulbasaur,charmander,caterpie,weedle,pidgey,kakuna,beedrill
 
-This boilerplate comes with a collection of npm scripts to make your life easier, you'll run them with `npm run <script name>` or `yarn run <script name>`:
+- Permite obtener el minimo número de peleas necesarias para llegar al resultado pasado como query parameter al api, o en caso que no, se utiliza el publicado en /api/newspaper/pokemonfights/lastresult.
 
-- `dev`: Run the application in development mode
-- `start` Run the application in production mode (prefer not to do that in development) 
-- `test`: Run the test suite
-- `test:unit`: Run only the unit tests
-- `test:features`: Run only the features tests
-- `coverage`: Run only the unit tests and generate code coverage for them, the output will be on `coverage` folder
-- `lint`: Lint the codebase
-- `sequelize`: Alias to the [Sequelize CLI](https://github.com/sequelize/cli)
-- `console`: Open the built-in console, you can access the DI container through the `container` variable once it's open, the console is promise-friendly. Click [here](https://github.com/talyssonoc/node-api-boilerplate/wiki/Application-console) to know more about the built-in console
-- `cleanup`: Removes the files from the example application
 
-## Tech
 
-- [Node v7.6+](http://nodejs.org/)
-- [Express](https://npmjs.com/package/express)
-- [Sequelize](https://www.npmjs.com/package/sequelize)
-- [Awilix](https://www.npmjs.com/package/awilix)
-- [Structure](https://www.npmjs.com/package/structure)
-- [HTTP Status](https://www.npmjs.com/package/http-status)
-- [Log4js](https://www.npmjs.com/package/log4js)
-- [Morgan](https://www.npmjs.com/package/morgan)
-- [Express Status Monitor](https://www.npmjs.com/package/express-status-monitor)
-- [Nodemon](https://www.npmjs.com/package/nodemon)
-- [PM2](https://www.npmjs.com/package/pm2)
-- [Mocha](https://www.npmjs.com/package/mocha)
-- [Chai](https://www.npmjs.com/package/chai)
-- [FactoryGirl](https://www.npmjs.com/package/factory-girl)
-- [Istanbul](https://www.npmjs.com/package/istanbul) + [NYC](https://www.npmjs.com/package/nyc)
-- [ESLint](https://www.npmjs.com/package/eslint)
 
-## Contributing
 
-This boilerplate is open to suggestions and contributions, documentation contributions are also important! :)

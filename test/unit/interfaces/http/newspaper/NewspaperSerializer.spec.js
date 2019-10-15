@@ -23,14 +23,8 @@ describe('Interfaces :: HTTP :: Newspaper :: NewspaperSerializer', () => {
 
         expect(serializedPokemonFightResult).to.eql({
             "Pokefight_result": [
-                {
-                    id: 1,
-                    name: "pokemon 1"
-                },
-                {
-                    id: 2,
-                    name: "pokemon 2"
-                }
+                "pokemon 1",
+                "pokemon 2"
             ]
         });
     });

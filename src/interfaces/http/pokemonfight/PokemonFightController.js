@@ -18,8 +18,6 @@ const PokemonFightController = {
         const { SUCCESS, ERROR } = getMinimumFights.outputs;
         const { pokemonresultlist } = query;
 
-        console.log(pokemonresultlist);
-
         getMinimumFights
             .on(SUCCESS, (minimunPokemonFights) => {
                 res
