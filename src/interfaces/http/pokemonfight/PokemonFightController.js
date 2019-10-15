@@ -8,14 +8,17 @@ const PokemonFightController = {
 
         router.use(inject('pokemonFightSerializer'));
 
-        router.get('/lastresult/minimumfights', inject('getMinimumFights'), this.index);
+        router.get('/minimumfights?:pokemonresultlist', inject('getMinimumFights'), this.index);
 
         return router;
     },
 
     index(req, res, next) {
-        const { getMinimumFights, pokemonFightSerializer } = req;
+        const { getMinimumFights, pokemonFightSerializer, query } = req;
         const { SUCCESS, ERROR } = getMinimumFights.outputs;
+        const { pokemonresultlist } = query;
+
+        console.log(pokemonresultlist);
 
         getMinimumFights
             .on(SUCCESS, (minimunPokemonFights) => {
@@ -25,7 +28,7 @@ const PokemonFightController = {
             })
             .on(ERROR, next);
 
-        getMinimumFights.execute();
+        getMinimumFights.execute(pokemonresultlist);
     }
 };
 

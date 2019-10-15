@@ -1,14 +1,13 @@
 
 module.exports = {
     pokemonList: [
-
         "squirtle",
         "bulbasaur",
-        "charmander",
         "caterpie",
-        "weedle",
+        "charmander",
         "kakuna",
-        "beedrill",
+        "weedle",
         "pidgey",
+        "beedrill",
     ]
 };

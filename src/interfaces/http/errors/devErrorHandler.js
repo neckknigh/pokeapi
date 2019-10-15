@@ -10,6 +10,8 @@ module.exports = (err, req, res, next) => { // eslint-disable-line no-unused-var
     error: {
       type: 'InternalServerError',
       message: err.message,
+
+      stack: err.stack
     }
   });
 };

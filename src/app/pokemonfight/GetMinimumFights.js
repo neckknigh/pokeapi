@@ -7,7 +7,7 @@ class GetMinimumFights extends Operation {
         this.pokemonFightsAppService = pokemonFightsAppService;
     }
 
-    async execute() {
+    async execute(pokemonResultList) {
         const { SUCCESS, ERROR } = this.outputs;
 
         try {
@@ -16,7 +16,7 @@ class GetMinimumFights extends Operation {
              * Get the minimun pokemon fights from the last result
              * by calling the app service.
              */
-            const minimunPokemonFights = await this.pokemonFightsAppService.calculateMinimumFights();
+            const minimunPokemonFights = await this.pokemonFightsAppService.calculateMinimumFights(pokemonResultList);
 
             this.emit(SUCCESS, minimunPokemonFights);
 

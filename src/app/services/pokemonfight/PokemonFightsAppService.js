@@ -3,20 +3,30 @@ class PokemonFightsAppService {
     constructor({
         pokemonFightService,
         pokemonFightResultsRepository,
-        pokemonsRepository
+        pokemonsRepository,
+        pokemonFightResultDomainService
     }) {
         this.pokemonFightService = pokemonFightService;
         this.pokemonFightResultsRepository = pokemonFightResultsRepository;
         this.pokemonsRepository = pokemonsRepository;
+        this.pokemonFightResultDomainService = pokemonFightResultDomainService;
     }
 
-    async calculateMinimumFights() {
+    async calculateMinimumFights(pokemonResultList) {
+
+        let lastPokemonFightResult = null;
 
         // Get the inital pokemon list
         const initialPokemonList = await this.pokemonsRepository.getAll();
 
-        // Get the last pokemon fight result
-        const lastPokemonFightResult = await this.pokemonFightResultsRepository.getLast();
+        if (pokemonResultList) {
+            lastPokemonFightResult = this.pokemonFightResultDomainService.buildPokemonFightResultFromPokemonList(pokemonResultList);
+        }
+        else {
+
+            // Get the last pokemon fight result
+            lastPokemonFightResult = await this.pokemonFightResultsRepository.getLast();
+        }
 
         /**
          * Calcule the minimum fights

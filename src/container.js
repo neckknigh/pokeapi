@@ -32,7 +32,8 @@ const {
 
 const {
   PokemonFightService,
-  PokemonService
+  PokemonService,
+  PokemonFightResultDomainService
 } = require('./domain/services');
 
 
@@ -149,7 +150,8 @@ container.register({
 // pokemon fight result service
 container.register({
   pokemonFightService: asClass(PokemonFightService).singleton(),
-  pokemonFightsAppService: asClass(PokemonFightsAppService).singleton()
+  pokemonFightsAppService: asClass(PokemonFightsAppService).singleton(),
+  pokemonFightResultDomainService: asClass(PokemonFightResultDomainService).singleton()
 });
 
 
