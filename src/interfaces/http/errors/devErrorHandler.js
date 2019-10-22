@@ -9,9 +9,7 @@ module.exports = (err, req, res, next) => { // eslint-disable-line no-unused-var
   res.status(Status.INTERNAL_SERVER_ERROR).json({
     error: {
       type: 'InternalServerError',
-      message: err.message,
-
-      stack: err.stack
+      message: err.message
     }
   });
 };
