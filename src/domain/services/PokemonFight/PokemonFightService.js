@@ -126,9 +126,14 @@ class PokemonFightService {
         // iterate over the pokemons O(m)
         clonedResultPokemonList.forEach((clonedPokemon) => {
             const { name } = clonedPokemon;
+            const currentMappedPokemon = nameMapedPokemons[name];
+
+            if (!currentMappedPokemon) {
+                throw new Error(`The pokemon ${name} doesn't exists on the pokedex!`)
+            }
 
             // assing the pokemon id
-            clonedPokemon.setId(nameMapedPokemons[name].id);
+            clonedPokemon.setId(currentMappedPokemon.id);
         });
 
         return clonedResultPokemonList;

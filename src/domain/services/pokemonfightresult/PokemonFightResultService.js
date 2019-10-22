@@ -6,7 +6,7 @@ class PokemonFightResultService {
 
     buildPokemonFightResultFromPokemonList(pokemonList) {
         return {
-            pokemonList: pokemonList.split(",").map((pokemon) => this.pokemonAdapter.adaptToEntity(pokemon))
+            pokemonList: pokemonList.split(",").filter((p) => !!p).map((pokemon) => this.pokemonAdapter.adaptToEntity(pokemon))
         };
     }
 }
